@@ -6,10 +6,17 @@ from datetime import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+#to  create database#
 import os
 from flask_sqlalchemy import SQLAlchemy
+#to update de basadate#
+from flask_migrate import Migrate
 
+
+
+#to  create database#
 basedir= os.path.abspath(os.path.dirname(__file__))
+
 
 
 class NameForm(FlaskForm):
@@ -26,6 +33,8 @@ Bootstrap(app)
 moment = Moment(app)
 #configuration of database#
 db = SQLAlchemy(app)
+# to migrate# 
+migrate = Migrate(app, db)
 
 #configuration of database Role and User model definition#
 
