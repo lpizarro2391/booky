@@ -17,12 +17,8 @@ import os
 from flask_mail import Message
 
 
-
-
-
-
 #to  create database#
-basedir= os.path.abspath(os.path.dirname(__file__))
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 
@@ -42,20 +38,22 @@ moment = Moment(app)
 db = SQLAlchemy(app)
 # to migrate# 
 migrate = Migrate(app, db)
-#Flask-Mail is initialized as shown #
-mail = Mail(app)
+
+
 #config de email, to send email from gmail#
-app.config['MAIL_SERVER'] = 'smtp.googlemail.com'
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
+#Flask-Mail is initialized as shown #
+mail = Mail(app)
 #Integrating Emails with the Application#
-
 app.config['FLASKY_MAIL_SUBJECT_PREFIX'] = '[Flasky]' 
-app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin mypleasurehelpyou@gmail.com'
+app.config['FLASKY_MAIL_SENDER'] = 'Flasky Admin <flasky@example.com>'
 # email example#
 app.config['FLASKY_ADMIN'] = os.environ.get('FLASKY_ADMIN')
+
 
 
 
@@ -93,7 +91,6 @@ def index():
         if user is None:
             user = User(username=form.name.data)
             db.session.add(user)
-            db.session.commit()
             session['known'] = False
             #to receive email when a user write in the formn#
             if app.config['FLASKY_ADMIN']:
